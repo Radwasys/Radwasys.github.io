@@ -8,6 +8,25 @@
 </head>
 
 <body>
+
+  <div id="con">
+    <button id="back2">BACK</button>
+
+    <h1>Unit converter</h1>
+    <select name="vert" id="vert">
+      <option value="Metre to centimeter">Metre to centimeter</option>
+      <option value="Centimeter to meter">Centimeter to meter</option>
+      <
+
+    </select>
+    <button onclick="convert()" id="ch">change</button>
+
+
+    <input type="number" id="fir"> <label id="firt"></label>
+    <input type="number" id="sec" disabled> <label id="sect"></label>
+    <button onclick="unit()" id="vt">convert</button>
+  </div>
+
   <div id="hist">
     <button id="back" onclick="bac()">BACK</button>
     <h1>History</h1>
@@ -17,6 +36,7 @@
 
     <div id="screen">
       <img id='mgs' src="cal.jpg">
+      <img id="un" src="unit.jpg">
       <p id="text"></p>
   </div>
   <div id="keys">
@@ -45,11 +65,101 @@
   
   
 <style >
-  img{
+
+  #mgs{
     display:none;
     height:60px;
     width:60px;
 
+  }
+
+  #vt{
+    width:200px;
+    height:50px;
+    margin-left:75px;
+    margin-top:70px;
+    background-color:black;
+    color:white;
+    font-size:20px;
+    border-radius:30px;
+    outline:none;
+  }
+
+  #firt,#sect{
+    color:white;
+  }
+
+  #ch{
+    background-color:black;
+    color:white;
+    height:50px;
+    border-radius:30px;
+    outline:none;
+  }
+
+  select{
+    margin-left:10%;
+    width:200px;
+    height:50px;
+    background-color:black;
+    color:white;
+    border-radius:30px;
+    outline:none;
+  }
+
+  #back2{
+    margin-left:0px;
+    margin-top:0px;
+    position:relative;
+    background-color:black;
+    color:white;
+    height:50px;
+    width:60px;
+    display:none;
+  }
+
+  #con{
+    position:absolute;
+    height:500px;
+    width:350px;
+    margin-left:67%;
+    overflow-y:scroll;
+    background-color:black;
+    display:none;
+  }
+
+  #un{
+    height:40px;
+    width:50px;
+    
+  }
+
+  #fir{
+    outline:none;
+    margin-left:20px;
+    width:200px;
+    height:50px;
+    margin-top:20px;
+    border-left:0;
+    border-right:0;
+    border-top:0;
+    border-bottom:2px solid white;
+    background-color:black;
+    color:white;
+  }
+
+  #sec{
+    outline:none;
+    margin-left:20px;
+    width:200px;
+    height:50px;
+    margin-top:60px;
+    border-left:0;
+    border-right:0;
+    border-top:0;
+    border-bottom:2px solid white;
+    background-color:black;
+    color:white;
   }
 
   #calc{
@@ -70,6 +180,8 @@
     position:absolute;
    
   }
+
+
   
   #keys{
     width:600px;
@@ -101,6 +213,7 @@
      font-size:40px;
      position:absolute ;
      margin-left:20px;
+     margin-top:10px;
   }
 
   #hist{
@@ -137,7 +250,9 @@
       margin:0;
     }
 
-    img{
+    
+
+    #mgs{
       display:block;
     }
 
@@ -182,7 +297,7 @@
       margin-left:20px;
     }
 
-    #hist{
+    #hist,#con{
       display:none;
       position:absolute;
       height:100%;
@@ -229,17 +344,57 @@
   var scr = document.getElementById('screen')
   var back = document.getElementById('back')
   var img = document.getElementById('mgs')
+  var img2 = document.getElementById('un')
+  var con = document.getElementById('con')
+  var back2 = document.getElementById("back2")
+  var firt = document.getElementById('firt')
+  var fir = document.getElementById("fir")
+  var sect = document.getElementById('sect')
+  var sec = document.getElementById("sec")
+  var vert = document.getElementById('vert')
 
   key.style.marginTop = scr.offsetHeight + 'px'
 
-  
+
+
+
+    img2.addEventListener("click" , function() {
+      hist.style.display = 'none'
+      con.style.display = 'block'
+      back2.style.display = 'block'
+      img2.style.display = 'none'
+
+      if(window.innerWidth < 818) {
+        hist.style.display = 'none'
+        con.style.display = 'block'
+        back2.style.display = 'block'
+        img2.style.display = 'none'
+        calc.style.display = 'none'
+      }
+
+    })
+
+    back2.addEventListener("click" , function() {
+      hist.style.display = 'block'
+      con.style.display = 'none'
+      back2.style.display = 'none'
+      img2.style.display = 'block'
+
+      if(window.innerWidth < 818) {
+        hist.style.display = 'none'
+        con.style.display = 'none'
+        back2.style.display = 'none'
+        img2.style.display = 'block'
+        calc.style.display = 'block'
+      }
+    })
+      
     img.addEventListener("click", function() {
       calc.style.display = 'none'
       hist.style.display = 'block'
       back.style.display = 'block'
-  
+      con.style.display = 'nones'
 
-    
   })
 
   function bac() {
@@ -292,6 +447,41 @@
    te.innerHTML = num
 
     
+  }
+
+  
+
+  function convert() {
+    var val = vert.value
+
+      if(val == 'Metre to centimeter') {
+        firt.innerHTML = 'Metre'
+        sect.innerHTML = 'Centimeter'
+      } 
+      if (val == 'Centimeter to meter') {
+        firt.innerHTML = 'Centimeter'
+        sect.innerHTML = 'Metre'
+      }
+  }
+
+  function unit() {
+    
+    if(fir.value == '') {
+      alert("write a number") 
+    } else {
+
+
+    if(firt.innerHTML == 'Metre') {
+      var res = fir.value * 100
+      sec.value = res
+      
+    } 
+    if (firt.innerHTML == 'Centimeter') {
+      var res2 = fir.value / 100
+      sec.value = res2
+    }
+  }
+
   }
   
   
