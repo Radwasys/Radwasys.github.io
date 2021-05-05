@@ -1,551 +1,133 @@
-<!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>calc</title>
-</head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>chat firebase</title>
+	<style>
+    body{
+      background:#848A8A;
 
-<body>
-
-  <div id="con">
-    <button id="back2">BACK</button>
+    }
 
 
-    <h1>Unit converter</h1>
-   
-    
-
-
-
-    <input type="number" id="fir"> 
-    <select id="vert">
-      <option value="Metre">Metre</option>
-      <option value="Centimetre">Centimetre</option>
-
-    </select>
-    <input type="number" id="sec" disabled>
-    <select id="vert2">
-      <option value="Metre">Metre</option>
-     <option value="Centimetre">Centimetre</option>
-
-    </select>
-    <button onclick="converter()" id="vt">convert</button>
-  </div>
-
-  <div id="hist">
-    <button id="back" onclick="bac()">BACK</button>
-    <h1>History</h1>
-    
-  </div>
-  <div id="calc">
-
-    <div id="screen">
-      <img id='mgs' src="cal.jpg">
-      <img id="un" src="unit.jpg">
-      <p id="text"></p>
-  </div>
-  <div id="keys">
-   <button class="numbers" onclick="dis('0')">0</button>
-   <button class="numbers" onclick="dis('1')">1</button>
-   <button class="numbers" onclick="dis('2')">2</button>
-   <button class="oper" onclick="dis('+')">+</button>
-   <button class="numbers" onclick="dis('3')">3</button>
-   <button class="numbers" onclick="dis('4')">4</button>
-   <button class="numbers" onclick="dis('5')">5</button>
-   <button class="oper" onclick="dis('-')">-</button>
-   <button class="numbers" onclick="dis('6')">6</button>
-   <button class="numbers" onclick="dis('7')">7</button>
-   <button class="numbers" onclick="dis('8')">8</button>
-   <button class="oper" onclick="dis('/')">/</button>
-   <button class="numbers" onclick="dis('9')">9</button>
-   <button class="numbers" onclick="dis('(')">(</button>
-   <button class="numbers" onclick="dis(')')">)</button>
-   <button class="oper" onclick="dis('*')">*</button>
-   <button class="numbers" onclick="dis('.')">.</button>
-   <button class="numbers" onclick="clr()">clr</button>
-   <button class="numbers" onclick="del()">del</button>
-   <button class="oper" onclick="solve()">=</button>
-
-  </div>
-  
-  
-<style >
-
- 
-
-  #mgs{
-    display:none;
-    height:60px;
-    width:60px;
-
-  }
-
-  #vert{
-    width:100px;
-    height:50px;
-    position:sticky;
-    
-    top:27%;
-  }
-
-  #vert2{
-    width:100px;
-    height:50px;
-    position:sticky;
-    
-    top:47%;
-  }
-
-  #vt{
-    width:200px;
-    height:50px;
-    margin-left:75px;
-    margin-top:70px;
-    background-color:black;
-    color:white;
-    font-size:20px;
-    border-radius:30px;
-    outline:none;
-  }
-
-  
-
-  #ch{
-    background-color:black;
-    position:absolute;
-    color:white;
-    height:50px;
-    width:60px;
-    margin-left:315px;
-    margin-top:-130px;
-    outline:none;
-    
-  }
-
-  #vert,#vert2{
-    background-color:black;
-    color:white;
-    border-radius:30px;
-    outline:none;
-    left:70%;
-  }
-
-  #back2{
-    margin-left:0px;
-    margin-top:0px;
-    position:relative;
-    background-color:black;
-    color:white;
-    height:50px;
-    width:60px;
-    display:none;
-  }
-
-  #con{
-    position:absolute;
-    height:500px;
-    width:350px;
-    margin-left:67%;
-    overflow-y:scroll;
-    background-color:black;
-    display:none;
-  }
-
-  #un{
-    height:40px;
-    width:50px;
-    
-  }
-
-  #fir{
-    outline:none;
-    margin-left:20px;
-    width:200px;
-    height:50px;
-    margin-top:20px;
-    border-left:0;
-    border-right:0;
-    border-top:0;
-    border-bottom:2px solid white;
-    background-color:black;
-    color:white;
-    font-size:30px;
-  }
-
-  #sec{
-    outline:none;
-    margin-left:20px;
-    width:200px;
-    height:50px;
-    margin-top:60px;
-    border-left:0;
-    border-right:0;
-    border-top:0;
-    border-bottom:2px solid white;
-    background-color:black;
-    color:white;
-    font-size:30px;
-  }
-
-  #calc{
-    width:600px;
-    height:500px;
-    background-color:#D29C2D;
-    position:relative;
-    margin-left:20%;
-    margin-top:70px;
-    
-  }
-  
-  #screen{
-    width:600px;
-    height:150px;
-    overflow-x:scroll;
-    background-color:black;
-    position:absolute;
-   
-  }
-
-
-  
-  #keys{
-    width:600px;
-    height:350px;
-    position:absolute;
-    background-color:#C89326;
-    margin-top:80px;
-    display:grid;
-    grid-template-columns:auto auto auto auto;
-    grid-template-rows:auto auto auto auto;
-    
-    
-  }
-
-  .oper{
-    background:orange;
-    color:white;
-    border:1px black solid;
-    outline:none;
-    font-size:30px;
-  }
-
-  .numbers{
-    font-size:30px;
-  }
-  
-  #text{
-     color:white;
-     font-size:40px;
-     position:absolute ;
-     margin-left:20px;
-     margin-top:10px;
-  }
-
-  #hist{
-    position:absolute;
-    height:500px;
-    width:350px;
-    margin-left:67%;
-    overflow-y:scroll;
-    background-color:black;
-    display:block;
-  }
-
-  h1{
-    color:white;
-    text-align:center;
-  }
-
-  .po{
-    color:white;
-    margin-left:10px;
-    font-size:30px;
-  }
-
-  #back{
-    display:none;
-  }
-
-
-  @media screen and (max-width:818px) {
-    
-    html,body{
+    form{
       width:100%;
-      height:100%;
-      margin:0;
+      height:10%;
     }
 
-    
-
-    #mgs{
-      display:block;
-    }
-
-   
-
-    #calc{
-      width:100%;
-      height:100%;
-      background-color:white;
-      position:relative;
-      
-      margin-left:0;
-      
-      margin-top:0;
-      
-    }
-    
-    #screen{
-      width:100%;
-      height:30%;
-
-      background-color:black;
-      position:absolute;
-     
-    }
-    
-    #keys{
-      width:100%;
-      height:70%;
-      position:absolute;
-      display:grid;
-      grid-template-columns:auto auto auto auto;
-      grid-template-rows:auto auto auto auto;
-      
-      
-    }
-    
-    #text{
-      color:white;
-      font-size:50px;
-      position:absolute ;
-      margin-left:20px;
-    }
-
-    #hist,#con{
-      display:none;
-      position:absolute;
-      height:100%;
-      width:100%;
-      margin:0;
-      overflow:scroll;
-      background-color:black;
-    }
-
-    h1{
-      color:white;
-      text-align:center;
-    }
-
-    .po{
-      color:white;
-      margin-left:10px;
-      font-size:50px;
-    }
-
-    #back{
-      margin-left:0px;
-      margin-top:0px;
-      position:relative;
-      background-color:black;
-      color:white;
-      height:50px;
-      width:60px;
-    }
-
-    .numbers,.oper{
+    #message{
+      width:87%;
+      height:10%;
       font-size:30px;
+      border-radius:30px;
+      outline:none;
+      position:fixed;
+      top:90%;
+      left:0;
     }
 
-    #sec{
-      margin-top:30%;
-      margin-left:10%;
-    }
-
-    #fir{
-      margin-top:20%;
-      margin-left:10%;
-    }
-
-    #vt{
-      margin-left:25%;
+    input[type="submit"]{
+      width:13%;
+      height:10%;
+      border-radius:30px;
+      position:fixed;
+      top:90%;
+      right:0;
     }
 
     
-  }
 
-</style>
-<script >
-  var te = document.getElementById('text')
-  var hist =  document.getElementById("hist")
-  var calc = document.getElementById("calc")
-  var key = document.getElementById('keys')
-  var scr = document.getElementById('screen')
-  var back = document.getElementById('back')
-  var img = document.getElementById('mgs')
-  var img2 = document.getElementById('un')
-  var con = document.getElementById('con')
-  var back2 = document.getElementById("back2")
-  
-  var fir = document.getElementById("fir")
-  
-  var sec = document.getElementById("sec")
-  var vert = document.getElementById('vert')
-  var vert2 = document.getElementById('vert2')
-
-  key.style.marginTop = scr.offsetHeight + 'px'
-
-
-
-
-    img2.addEventListener("click" , function() {
-      hist.style.display = 'none'
-      con.style.display = 'block'
-      back2.style.display = 'block'
-      img2.style.display = 'none'
-
-      if(window.innerWidth < 818) {
-        hist.style.display = 'none'
-        con.style.display = 'block'
-        back2.style.display = 'block'
-        img2.style.display = 'none'
-        calc.style.display = 'none'
-      }
-
-    })
-
-    back2.addEventListener("click" , function() {
-      hist.style.display = 'block'
-      con.style.display = 'none'
-      back2.style.display = 'none'
-      img2.style.display = 'block'
-
-      if(window.innerWidth < 818) {
-        hist.style.display = 'none'
-        con.style.display = 'none'
-        back2.style.display = 'none'
-        img2.style.display = 'block'
-        calc.style.display = 'block'
-      }
-    })
+    #messages{
+      overflow:scroll;
+      width:100%;
       
-    img.addEventListener("click", function() {
-      calc.style.display = 'none'
-      hist.style.display = 'block'
-      back.style.display = 'block'
-      con.style.display = 'nones'
+    }
 
-  })
+    .msg,.msge{
+      width:100%;
+      height:10%;
+      background:#7ABDFB;
+      border:2px solid black;
+      font-size:30px;
+      position:relative;
+      
+    }
 
-  function bac() {
-    calc.style.display = 'block'
-    hist.style.display = 'none'
-  }
+    .msge{
+      background:#6B9C6A;
+    }
 
- 
-  function dis(val) {
-    te.innerHTML += val
-  }
 
-  
-  
-  function solve() {
-    let x = te.innerHTML
-    let y = eval(x)
-    te.innerHTML = y
 
-    var el = document.createElement('p')
-    el.classList.add('po')
-    hist.appendChild(el)
-    el.innerHTML = x + ' ' + '=' + ' ' + y
 
-    el.addEventListener("click" , function() {
-      if(window.innerWidth < 818) {
-        te.innerHTML = x 
-        bac()
+	</style>
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
 
+	<!-- TODO: Add SDKs for Firebase products that you want to use-->
+
+
+	<script>
+	  // Your web app's Firebase configuration
+	  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyB_wjNUBNnF-NgAtMcKqflq52Mi_h7zvuI",
+	    authDomain: "chat-app-dff07.firebaseapp.com",
+	    projectId: "chat-app-dff07",
+	    databaseURL: "https://chat-app-dff07-default-rtdb.europe-west1.firebasedatabase.app/",
+	    storageBucket: "chat-app-dff07.appspot.com",
+	    messagingSenderId: "353853376541",
+	    appId: "1:353853376541:web:3a46c46d30f2519e951ef4",
+	    measurementId: "G-TTNRSNVWQ3"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+	  
+
+	  
+	  var name = prompt('Enter your name:')
+	 // var msgs = document.getElementById("msgs")
+
+
+	  function send(e) {
+	  	
+	  	var message = document.getElementById("message").value
+	  	firebase.database().ref('messages').push().set({
+	  		'sender':name,
+	  		'message':message
+	  	})
+      document.getElementById("message").value = ''
+	  	return false
+	  	
+	  }
+
+    firebase.database().ref('messages').on('child_added', function(snapshot) {
+      var mess = document.getElementById("messages") 
+      var msg = document.createElement('div')
+      mess.appendChild(msg)
+      
+      msg.setAttribute('id','message-' + snapshot.key)
+
+      if(name == snapshot.val().sender) {
+        msg.innerHTML = 'You: ' + snapshot.val().message
+        msg.classList.add('msg')
       } else {
-        te.innerHTML = x
+        msg.innerHTML = snapshot.val().sender + ': ' + snapshot.val().message.
+        msg.classList.add('msge')
       }
-    } )
-
-    
-  } 
-
-
-
- 
+ })
+	</script>
+</head>
+<body>
   
-  function clr() {
-    te.innerHTML = ''
-  }
+  <div id="messages">
 
-  function del() {
-   var last = te.innerHTML.length - 1
-   
-   var num = te.innerHTML.slice(0 , last)
-   te.innerHTML = num
+  </div>
 
-    
-  }
+	<form onsubmit="return send()">
+	<input type="text" id="message">
+	<input type="submit">
+</form>
 
-  
-
-  
-
-  function converter() {
-    var val1 = fir.value
-    
-    var val3 = vert.value
-    var val4 = vert2.value
-
-    if(val1 == '') {
-      alert("write a number") 
-    } else {
-
-    if(val3 == 'Metre' && val4 == 'Centimetre') {
-      var res = val1 * 100
-      sec.value = res
-      
-    }
-
-    if(val3 == 'Centimetre' && val4 == 'Metre') {
-      var res2 = val1 / 100
-      sec.value = res2
-    }}
-  }
-
-  addEventListener('keypress', function(e) {
-    if(e.key === 'Enter') {
-    if(fir.value == '') {
-      alert("write a number") 
-    } else {
-
-
-    var val1 = fir.value
-    
-    var val3 = vert.value
-    var val4 = vert2.value
-
-    
-
-    if(val3 == 'Metre' && val4 == 'Centimetre') {
-      var res = val1 * 100
-      sec.value = res
-      
-    }
-
-    if(val3 == 'Centimetre' && val4 == 'Metre') {
-      var res2 = val1 / 100
-      sec.value = res2
-    }
-  }}
-  })
-  
-  
-</script>
 </body>
-
 </html>
