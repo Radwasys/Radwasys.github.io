@@ -5,7 +5,7 @@
 	<style>
     body{
       background:#848A8A;
-
+      margin:0;
     }
 
 
@@ -37,23 +37,29 @@
     
 
     #messages{
-      overflow:scroll;
+      overflow-y:scroll;
       width:100%;
       
     }
 
     .msg,.msge{
-      width:100%;
-      height:10%;
+      width:50%;
+      
       background:#7ABDFB;
       border:2px solid black;
       font-size:30px;
       position:relative;
+      border-radius:30px;
+      float:right;
+      
+      word-wrap:break-word;
+      padding:10px;
       
     }
 
     .msge{
       background:#6B9C6A;
+      float:left;
     }
 
 
@@ -85,13 +91,19 @@
 	  
 
 	  
-	  var name = prompt('Enter your name:')
+        var name=prompt('Enter your name:');
+    
 	 // var msgs = document.getElementById("msgs")
-
+   
 
 	  function send(e) {
+
 	  	
 	  	var message = document.getElementById("message").value
+      if (message == ''){
+        alert('Enter a message')
+        return false
+      }
 	  	firebase.database().ref('messages').push().set({
 	  		'sender':name,
 	  		'message':message
@@ -103,7 +115,7 @@
 
     firebase.database().ref('messages').on('child_added', function(snapshot) {
       var mess = document.getElementById("messages") 
-      var msg = document.createElement('div')
+      var msg = document.createElement('p')
       mess.appendChild(msg)
       
       msg.setAttribute('id','message-' + snapshot.key)
@@ -111,8 +123,11 @@
       if(name == snapshot.val().sender) {
         msg.innerHTML = 'You: ' + snapshot.val().message
         msg.classList.add('msg')
+
+        
       } else {
         msg.innerHTML = snapshot.val().sender + ': ' + snapshot.val().message
+        
         msg.classList.add('msge')
       }
  })
@@ -125,8 +140,8 @@
   </div>
 
 	<form onsubmit="return send()">
-	<input type="text" id="message">
-	<input type="submit">
+	<input type="text" id="message" placeholder="Enter a message">
+	<input type="submit" value="SEND">
 </form>
 
 </body>
