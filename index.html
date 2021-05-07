@@ -25,13 +25,13 @@
       left:0;
     }
 
-    input[type="submit"]{
+    button{
       width:13%;
       height:10%;
       border-radius:30px;
       position:fixed;
       top:90%;
-      right:0;
+      left:87%;
     }
 
     
@@ -39,6 +39,8 @@
     #messages{
       overflow-y:scroll;
       width:100%;
+      position:relative;
+      top:3%;
       
     }
 
@@ -62,8 +64,25 @@
       float:left;
     }
 
+    .msg:before{
+      content:'You';
+      position:absolute;
+      right:10%;
+      top:-70%;
+    }
 
+    .msge:before{
+      content:attr(data);
+      position:absolute;
+      left:10%;
+      top:-70%;
+    }
 
+    #form{
+      position:relative;
+      height:10%;
+      width:100%;
+    }
 
 	</style>
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -89,12 +108,10 @@
 	  // Initialize Firebase
 	  firebase.initializeApp(firebaseConfig);
 	  
-
-	  
-        var name=prompt('Enter your name:');
-    
-	 // var msgs = document.getElementById("msgs")
-   
+    let name
+    while(!name){
+      name = prompt('Enter your name:')
+    }
 
 	  function send(e) {
 
@@ -109,9 +126,27 @@
 	  		'message':message
 	  	})
       document.getElementById("message").value = ''
+      window.scrollTo(0,document.body.scrollHeight)
 	  	return false
 	  	
 	  }
+
+    addEventListener('keydown',(e) => {
+      if(e.keyCode == 13){
+            var message = document.getElementById("message").value
+            if (message == ''){
+              alert('Enter a message')
+              return false
+            }
+            firebase.database().ref('messages').push().set({
+              'sender':name,
+              'message':message
+            })
+            document.getElementById("message").value = ''
+            window.scrollTo(0,document.body.scrollHeight)
+            return false
+          }
+    })
 
     firebase.database().ref('messages').on('child_added', function(snapshot) {
       var mess = document.getElementById("messages") 
@@ -121,16 +156,23 @@
       msg.setAttribute('id','message-' + snapshot.key)
 
       if(name == snapshot.val().sender) {
-        msg.innerHTML = 'You: ' + snapshot.val().message
+        msg.innerHTML = snapshot.val().message
         msg.classList.add('msg')
+        msg.setAttribute('data','You')
 
         
       } else {
-        msg.innerHTML = snapshot.val().sender + ': ' + snapshot.val().message
-        
+        msg.innerHTML = snapshot.val().message
+      
         msg.classList.add('msge')
+        msg.setAttribute('data',snapshot.val().sender)
       }
+      window.scrollTo(0,document.body.scrollHeight)
  })
+
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+      firebase.database().ref('messages').remove()
+    }
 	</script>
 </head>
 <body>
@@ -139,10 +181,11 @@
 
   </div>
 
-	<form onsubmit="return send()">
-	<input type="text" id="message" placeholder="Enter a message">
-	<input type="submit" value="SEND">
-</form>
+	<div id="form">
+	<input type="text" id="message" placeholder="Enter a message" autocomplete="off">
+	<button onclick="return send()">SEND</button>
+</div>
+
 
 </body>
 </html>
